@@ -1,0 +1,147 @@
+.modal
+    background-color: #fff
+    border-radius: 30px
+
+    margin-top: 40px
+    margin-left: 100px
+
+    width: 730px
+    height: 570px
+    padding-left: 50px
+
+    box-shadow: 14px 16px 0px 1000px rgba(17, 26, 34, 0.53)
+
+    position: relative
+    
+    &__close
+        position: absolute
+        right: 40px
+        top: 40px
+
+        width: 30px
+        height: 30px
+        background-image: url('../icons/btn_close.png')
+        background-size: contain
+        background-repeat: no-repeat
+
+        cursor: pointer
+
+    &__descr
+        padding-left: 130px
+        margin-top: 20px
+
+        display: inline-block
+
+    
+    &__list
+        list-style-type: none
+        counter-reset: counter
+
+
+    &__item
+        position: relative
+        display: block
+
+        padding-top: 30px
+        width: 90%
+
+        font-size: 20px
+        font-weight: 200
+
+    
+    &__first
+        counter-reset: ol 0
+
+        .modal__item::before
+            display: block
+            position: absolute
+
+            top: 0
+            width: 20px
+            height: 20px
+            color: #8cc9e8
+            font-weight: 700
+
+            counter-increment: ol
+            content: '0'counter(ol)
+
+    &__second
+        counter-reset: ol 3
+
+        .modal__item::before
+            display: block
+            position: absolute
+
+            top: 0
+            width: 20px
+            height: 20px
+            color: #8cc9e8
+            font-weight: 700
+
+            counter-increment: ol
+            content: '0'counter(ol)
+
+    &__item:not(:last-child)
+        margin-bottom: 15px
+    
+
+    &__nav
+        display: flex
+        align-items: center
+
+        margin-top: 40px
+
+        height: 20px
+        width: 500px
+
+    &__prev
+        display: flex
+        align-items: center
+
+        .prev-arr
+            display: inline-block
+            width: 14px
+            height: 14px
+
+            background-image: url('../icons/btn_prev.png')
+            background-size: contain
+            background-repeat: no-repeat
+
+            margin-right: 10px
+
+
+        .prev-round
+            display: inline-block
+            width: 10px
+            height: 10px
+
+            border-radius: 50%
+            background-color: #fc6da9
+            border: 1px solid #fc6da9
+
+
+    &__next
+        display: flex
+        align-items: center
+
+        margin-left: 10px
+
+        .next-round
+            display: inline-block
+            width: 10px
+            height: 10px
+
+            border-radius: 50%
+            border: 1px solid #000
+            background-color: #fff
+
+            margin-right: 17px
+
+        .next-arr
+            display: inline-block
+            width: 14px
+            height: 14px
+
+            background-image: url('../icons/btn_next.png')
+            background-size: contain
+            background-repeat: no-repeat

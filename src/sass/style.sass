@@ -1,0 +1,76 @@
+@import 'general/fonts'
+@import 'general/animations'
+
+
+@import 'blocks/header'
+@import 'blocks/footer'
+@import 'blocks/slide-1'
+@import 'blocks/slide-2'
+@import 'blocks/slide-3'
+
+@import 'blocks/modal'
+@import 'blocks/button'
+@import 'blocks/main-slide_background'
+
+
+
+a
+    text-decoration: none
+
+*
+    font-family: 'Gilroy', sans-serif
+    margin: 0
+    padding: 0
+
+    box-sizing: border-box
+
+
+h2 
+    padding: 0
+    margin: 0
+
+body
+    max-width: 1024px
+    max-height: 768px
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+    margin: 0
+
+
+.container
+    margin: 0 auto
+
+.wrapper
+    position: relative
+    overflow: hidden
+
+    height: 768px
+    width: 1024px
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+
+.slides
+    display: flex
+    width: 3072px
+    height: 100%
+    position: absolute
+
+    top: 0
+    left: 0
+
+    cursor: pointer
+
+    overflow: hidden
+
+.slides.transition
+    transition: all .5s ease-out
+
+.slide
+    width: 1024px
+    height: 768px

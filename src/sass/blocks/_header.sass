@@ -1,0 +1,41 @@
+
+//header
+.header-container
+    display: flex
+    align-items: center
+    
+.header
+    // height: 50px
+    position: fixed
+    top: 30px
+    left: 65px
+
+    height: 25px
+
+    z-index: 1000
+
+    &__logo
+        display: block
+        margin-right: 25px
+
+        img
+            width: 50%
+    
+    &__link
+        font-size: 18px
+        font-weight: 200
+        color: #000
+        text-transform: uppercase
+        letter-spacing: 0.1em
+
+        position: relative
+
+    &__link::before
+        content: ''
+        margin-left: -25px
+        display: block
+        position: absolute
+        height: 25px
+        width: 2px
+        transform: translateY(-4px)
+        background-color: #000

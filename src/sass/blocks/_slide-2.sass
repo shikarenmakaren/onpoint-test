@@ -1,0 +1,98 @@
+//slider-2 descr
+.descr-container 
+    padding: 120px 50px 35px 65px
+
+.descr
+    position: relative
+
+    background-image: url('../img/bg-2.png')
+    background-position: center center/cover
+    background-size: 100% 100%
+    background-repeat: no-repeat
+
+    &__title
+        font-size: 26px
+        font-weight: 200
+        text-transform: uppercase
+        letter-spacing: .1rem
+        line-height: 30px
+
+    &__wrapper
+        // padding-left: 50px
+        margin-top: 40px
+        height: 450px
+
+        position: relative
+        
+
+    &__scroll
+        position: absolute
+        height: 100%
+
+        .scroll-path 
+            display: block
+            position: absolute
+            left: 18px
+            top: 0
+            z-index: 0
+
+            background-color: #000
+            height: 100%
+            width: 5px
+            border-radius: 5px
+
+        .scroll-thumb
+            display: block
+            position: absolute
+            z-index: 2
+            top: 0
+            left: -5px
+
+            width: 16px
+            height: 100px
+
+            background-color: #d05b90
+            border-radius: 10px
+
+            // #df90b3
+
+            border-right: 5px solid #df90b3
+            border-bottom: 5px solid #df90b3
+
+            // #9a4471
+            border-left: 5px solid #9a4471
+            border-top: 5px solid #9a4471
+
+        
+
+    &__descr
+        margin-left: 50px
+
+        display: inline-block
+
+        height: 100%
+        width: 770px
+        padding: 20px 60px 20px 30px
+
+        background-color: #fff
+        border-radius: 40px
+
+        font-size: 20px
+        font-weight: 200
+        line-height: 34px
+
+        position: relative
+        // overflow-y: scroll
+        overflow: hidden
+
+        box-shadow: 0px 5px 24px 14px rgba(34, 60, 80, 0.2)
+
+
+    &__descr::-webkit-scrollbar
+        width: 9px
+        background-color: #000
+        border-radius: 5px
+
+    &__descr::-webkit-scrollbar-thumb 
+        background-color: #cf578d
+        border-radius: 10px

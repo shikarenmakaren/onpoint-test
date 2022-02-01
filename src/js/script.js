@@ -35,6 +35,11 @@ const velocityScroll = descrContentHeight / descrHeight;
 const mainLink = document.getElementById('main-link');
 
 
+const promoBottle = document.getElementById('promo-bottle');
+const spermAnim = document.getElementById('slide-2_animation');
+
+
+
 let scr1, scr2 = 0; // scroll
 let moveContent = 0; // scroll
 
@@ -55,19 +60,26 @@ function startup() {
     modal.addEventListener('touchmove', isolate(() => {}), false);
     modal.addEventListener('touchend', isolate(() => {}), false);
 
-    modalCloseBtn.addEventListener('touchstart', closeModal, false);
+    modalCloseBtn.addEventListener('touchstart', isolate(closeModal), false);
 
-    modalNext.addEventListener('touchstart', (event) => {
+    promoBottle.addEventListener('touchstart', isolate(() => {}), false);
+    promoBottle.addEventListener('touchmove', isolate(() => {}), false);
+    promoBottle.addEventListener('touchend', isolate(() => {}), false);
+
+    spermAnim.addEventListener('touchstart', (() => {}), false);
+    spermAnim.addEventListener('touchmove', (() => {}), false);
+    spermAnim.addEventListener('touchend', (() => {}), false);
+
+
+    modalNext.addEventListener('touchstart', isolate(() => {
         let i = 0;
-
-        event.preventDefault();
+        
         i++;
         if (i == (allModalSlides.length - 1)) {
             allModalSlides[i-1].style.display = 'none';
             allModalSlides[i].style.display = 'block';
 
             allModalSlides[i].classList.add('fadeIn');
-
         } 
 
         nextDot.style.backgroundColor = '#fc6da9';
@@ -76,11 +88,12 @@ function startup() {
         prevDot.style.borderColor = '#000'
         prevDot.style.backgroundColor = '#fff';
         
-    }, false);
-    modalPrev.addEventListener('touchstart', (event) => {
+    }), false);
+
+
+    modalPrev.addEventListener('touchstart', isolate(() => {
         let j = 1;
 
-        event.preventDefault();
         j--;
         if (j == 0) {
             allModalSlides[j+1].style.display = 'none';
@@ -94,12 +107,24 @@ function startup() {
         prevDot.style.borderColor = '#fc6da9';
         prevDot.style.backgroundColor = '#fc6da9';
 
+        
+
+    }), false);
+
+
+    scroll.addEventListener('touchstart', (event) => {
+        scr1 = event.touches[0].clientY;
+
+        event.preventDefault();
+        event.stopPropagation();
+
     }, false);
 
-    scroll.addEventListener('touchstart', isolate((event) => {
-        scr1 = event.touches[0].clientY;
-    }), false);
-    scroll.addEventListener('touchmove', isolate((event) => {
+    scroll.addEventListener('touchmove', (event) => {
+
+        event.preventDefault();
+        event.stopPropagation();
+
         scr2 = scr1 - event.touches[0].clientY;
         scroll.style.top = `${scroll.offsetTop - scr2}px`;
         moveContent = scroll.offsetTop / velocityScroll;
@@ -117,9 +142,10 @@ function startup() {
         content.scrollTo(0, moveContent);
         scr1 = event.touches[0].clientY;
 
-    }), false);
-    scroll.addEventListener('touchend', isolate(() => {}), false);
+    }, false);
 
+    scroll.addEventListener('touchend', (() => {}), false);
+    
     homeBtn.addEventListener('touchstart', isolate((event) => {
         slideIndex = 0;
         transit(0);

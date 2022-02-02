@@ -62,21 +62,6 @@ function startup() {
 
     modalCloseBtn.addEventListener('touchstart', isolate(closeModal), false);
 
-    promoBottle.addEventListener('touchstart', isolate(() => {
-    }), false);
-    promoBottle.addEventListener('touchmove', isolate(() => {
-    }), false);
-    promoBottle.addEventListener('touchend', isolate(() => {
-    }), false);
-
-    spermAnim.addEventListener('touchstart', (() => {
-    }), false);
-    spermAnim.addEventListener('touchmove', (() => {
-    }), false);
-    spermAnim.addEventListener('touchend', (() => {
-    }), false);
-
-
     modalNext.addEventListener('touchstart', isolate(() => {
         allModalSlides[0].style.display = 'none';
         allModalSlides[1].style.display = 'block';
@@ -130,7 +115,7 @@ function startup() {
 
     homeBtn.addEventListener('touchstart', isolate(() => {
         slideIndex = 0;
-        transit(0);
+        transit(slideIndex);
     }), false);
     homeBtn.addEventListener('touchmove', isolate(() => {
     }), false);
@@ -139,7 +124,7 @@ function startup() {
 
     mainLink.addEventListener('touchstart', isolate(() => {
         slideIndex = 1;
-        transit(WIDTH);
+        transit(slideIndex);
     }), false);
     mainLink.addEventListener('touchmove', isolate(() => {
     }), false);
@@ -174,7 +159,7 @@ function startTouch(event) {
 function moveTouch(event) {
     lastPosX = event.touches[0].clientX;
     let diff = startPosX - lastPosX;
-    transit(slideIndex * WIDTH + diff);
+    transit(slideIndex, diff);
 }
 
 function endTouch() {
@@ -182,7 +167,7 @@ function endTouch() {
     if (!(newIndex < 0 || newIndex > (allSlides.length - 1))) {
         slideIndex = newIndex;
     }
-    transit(slideIndex * WIDTH);
+    transit(slideIndex);
 }
 
 const TRESHOLD_X = 200;
@@ -201,9 +186,17 @@ function swipe(startX, endX) {
     return 0
 }
 
-function transit(newOffset) {
+function transit(idx, diff=0) {
     slider.classList.add("transition");
-    slider.style.left = `${-newOffset}px`;
+    slider.style.left = `${-(idx*WIDTH + diff)}px`;
+
+    // sperm animation
+    if (idx === 1) {
+        document.querySelector('.slide-background').classList.add('sperm-animation');
+    }
+    if (idx === 0) {
+        document.querySelector('.slide-background').classList.remove('sperm-animation');
+    }
 }
 
 function openModal() {

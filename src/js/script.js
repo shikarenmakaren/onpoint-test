@@ -112,20 +112,18 @@ function startup() {
 
         prevDot.style.borderColor = '#fc6da9';
         prevDot.style.backgroundColor = '#fc6da9';
-
-
     }), false);
 
 
-    scroll.addEventListener('touchstart', (event) => {
+    scroll.addEventListener('touchstart', isolate((event) => {
         scr1 = event.touches[0].clientY;
 
         event.preventDefault();
         event.stopPropagation();
 
-    }, false);
+    }), false);
 
-    scroll.addEventListener('touchmove', (event) => {
+    scroll.addEventListener('touchmove', isolate((event) => {
 
         event.preventDefault();
         event.stopPropagation();
@@ -147,9 +145,9 @@ function startup() {
         content.scrollTo(0, moveContent);
         scr1 = event.touches[0].clientY;
 
-    }, false);
+    }), false);
 
-    scroll.addEventListener('touchend', (() => {
+    scroll.addEventListener('touchend', isolate(() => {
     }), false);
 
     homeBtn.addEventListener('touchstart', isolate(() => {
@@ -172,11 +170,11 @@ function startup() {
 }
 
 function isolate(func) {
-    return function (event) {
+    return function(event) {
         event.preventDefault();
-        event.stopPropagation();
-
-        return func.apply(event);
+        let ret = func.call(this, event);
+        event.stopPropagation(); 
+        return ret;
     };
 }
 

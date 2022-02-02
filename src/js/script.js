@@ -78,15 +78,8 @@ function startup() {
 
 
     modalNext.addEventListener('touchstart', isolate(() => {
-        let i = 0;
-
-        i++;
-        if (i === (allModalSlides.length - 1)) {
-            allModalSlides[i - 1].style.display = 'none';
-            allModalSlides[i].style.display = 'block';
-
-            allModalSlides[i].classList.add('fadeIn');
-        }
+        allModalSlides[0].style.display = 'none';
+        allModalSlides[1].style.display = 'block';
 
         nextDot.style.backgroundColor = '#fc6da9';
         nextDot.style.borderColor = '#fc6da9';
@@ -98,15 +91,9 @@ function startup() {
 
 
     modalPrev.addEventListener('touchstart', isolate(() => {
-        let j = 1;
+        allModalSlides[1].style.display = 'none';
+        allModalSlides[0].style.display = 'block';
 
-        j--;
-        if (j === 0) {
-            allModalSlides[j + 1].style.display = 'none';
-            allModalSlides[j].style.display = 'block';
-
-            allModalSlides[j].classList.add('fadeIn');
-        }
         nextDot.style.backgroundColor = '#fff';
         nextDot.style.borderColor = '#000';
 
@@ -117,17 +104,9 @@ function startup() {
 
     scroll.addEventListener('touchstart', isolate((event) => {
         scr1 = event.touches[0].clientY;
-
-        event.preventDefault();
-        event.stopPropagation();
-
     }), false);
 
     scroll.addEventListener('touchmove', isolate((event) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
         scr2 = scr1 - event.touches[0].clientY;
         scroll.style.top = `${scroll.offsetTop - scr2}px`;
         moveContent = scroll.offsetTop / velocityScroll;
@@ -147,8 +126,7 @@ function startup() {
 
     }), false);
 
-    scroll.addEventListener('touchend', isolate(() => {
-    }), false);
+    scroll.addEventListener('touchend', isolate(() => {}), false);
 
     homeBtn.addEventListener('touchstart', isolate(() => {
         slideIndex = 0;

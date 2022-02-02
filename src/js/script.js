@@ -21,13 +21,10 @@ const allModalSlides = document.querySelectorAll('.modal-slide');
 
 const homeBtn = document.getElementById('home-btn');
 
-const slideWidth = allSlides[0].clientWidth;
-
 const scroll = document.getElementById('scroll');
-const scrollWrapper = document.getElementById('scroll-wrapper');
 
-const descrContentHeight = document.querySelector('.descr__descr').scrollHeight; //высота контента внутри дескр 686px
-const descrHeight = document.querySelector('.descr__descr').offsetHeight; //высота дескр
+const descrContentHeight = document.querySelector('.descr__descr').scrollHeight;
+const descrHeight = document.querySelector('.descr__descr').offsetHeight;
 const content = document.querySelector('.descr__descr');
 
 const velocityScroll = descrContentHeight / descrHeight;
@@ -35,9 +32,12 @@ const velocityScroll = descrContentHeight / descrHeight;
 const mainLink = document.getElementById('main-link');
 
 
-let scr1, scr2 = 0; // scroll
-let moveContent = 0; // scroll
+const promoBottle = document.getElementById('promo-bottle');
+const spermAnim = document.getElementById('slide-2_animation');
 
+
+let scr1, scr2 = 0;
+let moveContent = 0;
 
 
 document.addEventListener("DOMContentLoaded", startup);
@@ -48,63 +48,55 @@ function startup() {
     wrapper.addEventListener('touchmove', moveTouch, false);
 
     promoBtn.addEventListener('touchstart', isolate(openModal), false);
-    promoBtn.addEventListener('touchmove', isolate(() => {}), false);
-    promoBtn.addEventListener('touchend', isolate(() => {}), false);
+    promoBtn.addEventListener('touchmove', isolate(() => {
+    }), false);
+    promoBtn.addEventListener('touchend', isolate(() => {
+    }), false);
 
-    modal.addEventListener('touchstart', isolate(() => {}), false);
-    modal.addEventListener('touchmove', isolate(() => {}), false);
-    modal.addEventListener('touchend', isolate(() => {}), false);
+    modal.addEventListener('touchstart', isolate(() => {
+    }), false);
+    modal.addEventListener('touchmove', isolate(() => {
+    }), false);
+    modal.addEventListener('touchend', isolate(() => {
+    }), false);
 
-    modalCloseBtn.addEventListener('touchstart', closeModal, false);
+    modalCloseBtn.addEventListener('touchstart', isolate(closeModal), false);
 
-    modalNext.addEventListener('touchstart', (event) => {
-        let i = 0;
-
-        event.preventDefault();
-        i++;
-        if (i == (allModalSlides.length - 1)) {
-            allModalSlides[i-1].style.display = 'none';
-            allModalSlides[i].style.display = 'block';
-
-            allModalSlides[i].classList.add('fadeIn');
-
-        } 
+    modalNext.addEventListener('touchstart', isolate(() => {
+        allModalSlides[0].style.display = 'none';
+        allModalSlides[1].style.display = 'block';
 
         nextDot.style.backgroundColor = '#fc6da9';
         nextDot.style.borderColor = '#fc6da9';
 
         prevDot.style.borderColor = '#000'
         prevDot.style.backgroundColor = '#fff';
-        
-    }, false);
-    modalPrev.addEventListener('touchstart', (event) => {
-        let j = 1;
 
-        event.preventDefault();
-        j--;
-        if (j == 0) {
-            allModalSlides[j+1].style.display = 'none';
-            allModalSlides[j].style.display = 'block';
+    }), false);
 
-            allModalSlides[j].classList.add('fadeIn');
-        } 
+
+    modalPrev.addEventListener('touchstart', isolate(() => {
+        allModalSlides[1].style.display = 'none';
+        allModalSlides[0].style.display = 'block';
+
         nextDot.style.backgroundColor = '#fff';
         nextDot.style.borderColor = '#000';
 
         prevDot.style.borderColor = '#fc6da9';
         prevDot.style.backgroundColor = '#fc6da9';
+    }), false);
 
-    }, false);
 
     scroll.addEventListener('touchstart', isolate((event) => {
         scr1 = event.touches[0].clientY;
     }), false);
+
     scroll.addEventListener('touchmove', isolate((event) => {
         scr2 = scr1 - event.touches[0].clientY;
         scroll.style.top = `${scroll.offsetTop - scr2}px`;
         moveContent = scroll.offsetTop / velocityScroll;
 
-        maxScroll = descrHeight - scroll.offsetHeight;
+        let maxScroll = descrHeight - scroll.offsetHeight;
 
         if (scroll.offsetTop < 0) {
             scroll.style.top = '0px';
@@ -118,29 +110,34 @@ function startup() {
         scr1 = event.touches[0].clientY;
 
     }), false);
+
     scroll.addEventListener('touchend', isolate(() => {}), false);
 
-    homeBtn.addEventListener('touchstart', isolate((event) => {
+    homeBtn.addEventListener('touchstart', isolate(() => {
         slideIndex = 0;
-        transit(0);
+        transit(slideIndex);
     }), false);
-    homeBtn.addEventListener('touchmove', isolate(() => {}), false);
-    homeBtn.addEventListener('touchend', isolate(() => {}), false);
+    homeBtn.addEventListener('touchmove', isolate(() => {
+    }), false);
+    homeBtn.addEventListener('touchend', isolate(() => {
+    }), false);
 
-    mainLink.addEventListener('touchstart', isolate((event) => {
+    mainLink.addEventListener('touchstart', isolate(() => {
         slideIndex = 1;
-        transit(WIDTH);
+        transit(slideIndex);
     }), false);
-    mainLink.addEventListener('touchmove', isolate(() => {}), false);
-    mainLink.addEventListener('touchend', isolate(() => {}), false);
-  }
+    mainLink.addEventListener('touchmove', isolate(() => {
+    }), false);
+    mainLink.addEventListener('touchend', isolate(() => {
+    }), false);
+}
 
 function isolate(func) {
     return function(event) {
         event.preventDefault();
-        event.stopPropagation();
-
-        return func.apply(event);
+        let ret = func.call(this, event);
+        event.stopPropagation(); 
+        return ret;
     };
 }
 
@@ -153,7 +150,7 @@ let startPosX;
 
 function startTouch(event) {
     event.preventDefault();
-    
+
     startIndex = slideIndex;
     startPosX = event.touches[0].clientX;
     lastPosX = startPosX;
@@ -162,26 +159,26 @@ function startTouch(event) {
 function moveTouch(event) {
     lastPosX = event.touches[0].clientX;
     let diff = startPosX - lastPosX;
-    transit(slideIndex*WIDTH + diff);
+    transit(slideIndex, diff);
 }
 
-function endTouch(event) {
+function endTouch() {
     let newIndex = startIndex + swipe(startPosX, lastPosX)
-    if (!(newIndex < 0 || newIndex > (allSlides.length -1))) {
+    if (!(newIndex < 0 || newIndex > (allSlides.length - 1))) {
         slideIndex = newIndex;
     }
-    transit(slideIndex*WIDTH);
+    transit(slideIndex);
 }
 
 const TRESHOLD_X = 200;
 
 function swipe(startX, endX) {
     let diff = endX - startX;
-    
+
     if (diff < -TRESHOLD_X) {
         return 1
     }
-    
+
     if (diff > TRESHOLD_X) {
         return -1
     }
@@ -189,12 +186,20 @@ function swipe(startX, endX) {
     return 0
 }
 
-function transit(newOffset) {
+function transit(idx, diff=0) {
     slider.classList.add("transition");
-    slider.style.left = `${-newOffset}px`;
+    slider.style.left = `${-(idx*WIDTH + diff)}px`;
+
+    // sperm animation
+    if (idx === 1) {
+        document.querySelector('.slide-background').classList.add('sperm-animation');
+    }
+    if (idx === 0) {
+        document.querySelector('.slide-background').classList.remove('sperm-animation');
+    }
 }
 
-function openModal(event) {
+function openModal() {
     promo.style.display = 'none';
 
     modal.style.display = 'block';
@@ -208,11 +213,11 @@ function openModal(event) {
 }
 
 function closeModal() {
-    modal.style.display = 'none',
+    modal.style.display = 'none';
     promo.style.display = 'block';
 
     modal.classList.add('fadeOut');
-    modal.classList.remove('fadeIn'),
+    modal.classList.remove('fadeIn');
 
     modalSecond.style.display = 'none';
     modalFirst.style.display = 'block';

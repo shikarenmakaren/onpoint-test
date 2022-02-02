@@ -48,7 +48,6 @@
         font-size: 20px
         font-weight: 200
 
-    
     &__first
         counter-reset: ol 0
 
@@ -80,6 +79,12 @@
 
             counter-increment: ol
             content: '0'counter(ol)
+
+    &__first, 
+    &__second
+        animation: fadeIn 1s
+
+
 
     &__item:not(:last-child)
         margin-bottom: 15px

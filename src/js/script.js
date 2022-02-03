@@ -188,7 +188,11 @@ function swipe(startX, endX) {
 
 function transit(idx, diff=0) {
     slider.classList.add("transition");
-    slider.style.left = `${-(idx*WIDTH + diff)}px`;
+    let trans = idx*WIDTH + diff
+    console.log(trans)
+    if (!(trans<0 || trans>WIDTH*(allModalSlides.length))){
+        slider.style.left = `${-trans}px`;
+    } 
 
     // sperm animation
     if (idx === 1) {
